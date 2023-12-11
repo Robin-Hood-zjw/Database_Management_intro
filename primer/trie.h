@@ -14,7 +14,7 @@ namespace bustub {
     class TrieNode {
         private:
             std::map<char, std::shared_ptr<const TrieNode>> children_;
-        
+
         public:
             TrieNode Clone() const; // create a new node
             std::map<char, std::shared_ptr<const TrieNode>> GetChildren() const;
@@ -28,14 +28,13 @@ namespace bustub {
             std::shared_ptr<T> value_;
 
         public:
-            // using TrieNode<T>::TrieNode;  // Inherit constructors
+            using TrieNode<T>::TrieNode;  // Inherit constructors
             const T& GetValue() const;
             bool GetLeafStatus() const;
             TrieNodeWithValue Clone() const;
             std::shared_ptr<T> GetValuePtr() const;
-            explicit TrieNodeWithValue(std::shared_ptr<T> value);
+            TrieNodeWithValue(std::shared_ptr<T> value);
             TrieNodeWithValue(const std::map<char, std::shared_ptr<const TrieNode<T>>>& children, std::shared_ptr<T> value);
-
     };
 
     template <class T>
@@ -46,7 +45,7 @@ namespace bustub {
         public:
             Trie();
             Trie Clone() const;
-            std::shared_ptr<const TrieNode<T>> GetRootPointer() const;
+            std::shared_ptr<const TrieNode<T>> GetRoot() const;
             explicit Trie(const std::shared_ptr<const TrieNode<T>>& root);
 
             template <class U>
