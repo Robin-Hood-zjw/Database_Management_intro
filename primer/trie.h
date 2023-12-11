@@ -56,6 +56,68 @@ namespace bustub {
 
             Trie Remove(std::string_view key) const;
     };
-}  // namespace bustub
+
+
+
+    // the implementations of the above function headers
+    template <class T>
+    TrieNode<T> TrieNode<T>::Clone() const {
+        return TrieNode<T>(children_);
+    }
+
+    template <class T>
+    std::map<char, std::shared_ptr<const TrieNode<T>>> TrieNode<T>::GetChildren() const {
+        return children_;
+    }
+
+    template <class T>
+    TrieNode<T>::TrieNode(const std::map<char, std::shared_ptr<const TrieNode>>& children)
+        : children_(children) {}
+
+    template <class T>
+    const T& TrieNodeWithValue<T>::GetValue() const {
+        return *value_;
+    }
+
+    template <class T>
+    bool TrieNodeWithValue<T>::GetLeafStatus() const {
+        return is_leaf_node_;
+    }
+
+    template <class T>
+    TrieNodeWithValue<T> TrieNodeWithValue<T>::Clone() const {
+        return TrieNodeWithValue<T>(this->GetChildren(), value_);
+    }
+
+    template <class T>
+    std::shared_ptr<T> TrieNodeWithValue<T>::GetValuePtr() const {
+        return value_;
+    }
+
+    template <class T>
+    TrieNodeWithValue<T>::TrieNodeWithValue(std::shared_ptr<T> value)
+        : is_leaf_node_(true), value_(value) {}
+
+    template <class T>
+    TrieNodeWithValue<T>::TrieNodeWithValue(const std::map<char, std::shared_ptr<const TrieNode<T>>>& children,
+                                            std::shared_ptr<T> value)
+        : TrieNode<T>(children), is_leaf_node_(true), value_(value) {}
+
+    template <class T>
+    Trie<T>::Trie() : root_(nullptr) {}
+
+    template <class T>
+    Trie<T> Trie<T>::Clone() const {
+        return Trie<T>(root_);
+    }
+
+    template <class T>
+    std::shared_ptr<const TrieNode<T>> Trie<T>::GetRoot() const {
+        return root_;
+    }
+
+    template <class T>
+    Trie<T>::Trie(const std::shared_ptr<const TrieNode<T>>& root) : root_(root) {}
+}
 
 #endif
